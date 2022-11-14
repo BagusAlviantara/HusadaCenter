@@ -8,6 +8,8 @@ const UserRoute = require("./routes/UserRoute.js");
 const AuthRoute = require("./routes/AuthRoute.js");
 const BalianRoute = require("./routes/BalianRoute.js");
 const CustomerRoute = require("./routes/CustomerRoute.js");
+const PengobatanRoute = require("./routes/PengobatanRoute.js");
+const AlternatifRoute = require("./routes/AlternatifBalianRoute.js");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -21,6 +23,8 @@ app.use(UserRoute);
 app.use(AuthRoute);
 app.use(BalianRoute);
 app.use(CustomerRoute);
+app.use(PengobatanRoute);
+app.use(AlternatifRoute);
 
 // create server 
 app.listen(port, () => console.log(`Server running at port: ${port}!`));
