@@ -1,7 +1,6 @@
 const User = require("../models/UserModel.js");
 const argon2 = require("argon2");
 
-
 exports.getUsers = async(req, res) => {
     try {
         const response = await User.findAll({
@@ -63,6 +62,7 @@ exports.createUser = async(req, res) => {
     if (user) {
         return res.status(409).json({ msg: "email already exists" });
     }
+
     const { email, password, confPassword, name, phone, role } = req.body;
     if (password !== confPassword) return res.status(400).json({ msg: "Password dan Confirm Password tidak cocok" });
     const hashPassword = await argon2.hash(password);
