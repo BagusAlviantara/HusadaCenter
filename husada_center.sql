@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 20, 2022 at 09:59 PM
+-- Generation Time: Nov 21, 2022 at 12:40 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -115,6 +115,7 @@ CREATE TABLE `obat` (
   `description` text NOT NULL,
   `stock` int(5) NOT NULL,
   `price` bigint(25) NOT NULL,
+  `URL` text NOT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -123,14 +124,14 @@ CREATE TABLE `obat` (
 -- Dumping data for table `obat`
 --
 
-INSERT INTO `obat` (`id`, `latin_name`, `local_name`, `description`, `stock`, `price`, `created_at`, `updated_at`) VALUES
-(1, 'Kunyit/Curcuma longa', 'Kunir (Jawa), Kunit (Kalimantan), Kakunye (Sumatera), Uinida (Sulawesi)', 'Menurunkan   tekanan   darah,   obat malaria,  obat  cacing,  obat  sakit  perut,  mengobati keseleo, memar, dan rematik.', 5, 100000, '2022-11-18 08:24:59', '2022-11-18 08:26:12'),
-(2, 'Jahe Merah/Zingiber officinale var. rubrum', 'Jahe (Jawa), Halia udang (Aceh)', 'Menghangatkan   badan,   meluruhkan keringat,  mengatasai  perut  kembung,  mengatasi radang tenggorokan, dan megatasi nyeri otot', 5, 10000, '2022-11-20 00:47:01', '2022-11-20 00:47:01'),
-(3, 'Temulawak/Curcuma xanthorrhiza', 'Temulawak  (Jawa),  Temu  Lobak (Madura), Koneng Gede (Sunda)', 'Mengobati   hepatitis,   radang   hati, radang    empedu, radang    ginjal, kurang    napsu makanan,   diare,   wasir,   melancarkan ASI,   dan kolesterol tinggi', 5, 15000, '2022-11-20 00:47:01', '2022-11-20 00:47:01'),
-(4, 'Bangle/Zingiber cassumanar', 'Bangle   (Jawa),   Panglai   (Sunda), Padhiyang   (Madura),   Kunit   bolai   (Sumatera), Banggele (Bali)', 'Mengobati demam, sakit kepala, batuk berdahak,   perut   nyeri,   masuk   angin,   sembelit, sakit kuning, dan cacingan', 5, 10000, '2022-11-20 00:48:37', '2022-11-20 00:48:37'),
-(5, 'Lengkuas/Alpinia galanga', 'Laos (Jawa), Laja (Sunda)', 'Mengobati  rematik,  bronkitis,  masuk angin,    menambah    nafsu    makan,    mencairkan dahak,   kurap,   flek   hitam,   dan   menghangatkan badan', 5, 10000, '2022-11-20 00:48:37', '2022-11-20 00:48:37'),
-(6, 'Jamu Cemcem', 'Loloh Cemcem (Bali)', 'Loloh Cemcem adalah jamu yang terbuat dari daun cemcem yang diolah menggunakan rempah-rempah sehingga menghasilkan minuman yang hangat ditenggorokan. Bermanfaat untuk menghilangkan batuk dan meningkatkan nafsu makan', 10, 10000, '2022-11-20 00:53:23', '2022-11-20 00:53:23'),
-(7, 'Jamu Kunyit', 'Loloh Kunyit (Bali)', 'Loloh Kunyit adalah jamu yang terbuat dari rempah kunyit yang diolah sehingga menghasilkan minuman yang sehat untuk menjadi obat tradisional. Bermanfaat untuk meningkatkan nafsu makan', 10, 10000, '2022-11-20 00:53:23', '2022-11-20 00:53:23');
+INSERT INTO `obat` (`id`, `latin_name`, `local_name`, `description`, `stock`, `price`, `URL`, `created_at`, `updated_at`) VALUES
+(1, 'Kunyit/Curcuma longa', 'Kunir (Jawa), Kunit (Kalimantan), Kakunye (Sumatera), Uinida (Sulawesi)', 'Menurunkan   tekanan   darah,   obat malaria,  obat  cacing,  obat  sakit  perut,  mengobati keseleo, memar, dan rematik.', 5, 100000, 'https://drive.google.com/file/d/1Lq10P9Ks-u3NKMCsA_PSZOJuH6VTh0VH/view?usp=share_link', '2022-11-18 08:24:59', '2022-11-18 08:26:12'),
+(2, 'Jahe Merah/Zingiber officinale var. rubrum', 'Jahe (Jawa), Halia udang (Aceh)', 'Menghangatkan   badan,   meluruhkan keringat,  mengatasai  perut  kembung,  mengatasi radang tenggorokan, dan megatasi nyeri otot', 5, 10000, 'https://drive.google.com/file/d/1av-d7daGWleIkKoEQmGtiM6ab-qIpIVV/view?usp=share_link', '2022-11-20 00:47:01', '2022-11-20 00:47:01'),
+(3, 'Temulawak/Curcuma xanthorrhiza', 'Temulawak  (Jawa),  Temu  Lobak (Madura), Koneng Gede (Sunda)', 'Mengobati   hepatitis,   radang   hati, radang    empedu, radang    ginjal, kurang    napsu makanan,   diare,   wasir,   melancarkan ASI,   dan kolesterol tinggi', 5, 15000, 'https://drive.google.com/file/d/1yJULdk0F30vbqnxwDfuz66g4AEN7JgvK/view?usp=sharing', '2022-11-20 00:47:01', '2022-11-20 00:47:01'),
+(4, 'Bangle/Zingiber cassumanar', 'Bangle   (Jawa),   Panglai   (Sunda), Padhiyang   (Madura),   Kunit   bolai   (Sumatera), Banggele (Bali)', 'Mengobati demam, sakit kepala, batuk berdahak,   perut   nyeri,   masuk   angin,   sembelit, sakit kuning, dan cacingan', 5, 10000, 'https://drive.google.com/file/d/1J4Iku5f5t-uxE7UELGmUbrhycBUPNmUr/view?usp=share_link', '2022-11-20 00:48:37', '2022-11-20 00:48:37'),
+(5, 'Lengkuas/Alpinia galanga', 'Laos (Jawa), Laja (Sunda)', 'Mengobati  rematik,  bronkitis,  masuk angin,    menambah    nafsu    makan,    mencairkan dahak,   kurap,   flek   hitam,   dan   menghangatkan badan', 5, 10000, 'https://drive.google.com/file/d/1fdFrSferezY87PxDjmhOF5-9ttDrXUSe/view?usp=share_link', '2022-11-20 00:48:37', '2022-11-20 00:48:37'),
+(6, 'Jamu Cemcem', 'Loloh Cemcem (Bali)', 'Loloh Cemcem adalah jamu yang terbuat dari daun cemcem yang diolah menggunakan rempah-rempah sehingga menghasilkan minuman yang hangat ditenggorokan. Bermanfaat untuk menghilangkan batuk dan meningkatkan nafsu makan', 10, 10000, 'https://drive.google.com/file/d/1xtwXm8RsEDFC6AIssL8uMn7jixYHG4yd/view?usp=share_link', '2022-11-20 00:53:23', '2022-11-20 00:53:23'),
+(7, 'Jamu Kunyit', 'Loloh Kunyit (Bali)', 'Loloh Kunyit adalah jamu yang terbuat dari rempah kunyit yang diolah sehingga menghasilkan minuman yang sehat untuk menjadi obat tradisional. Bermanfaat untuk meningkatkan nafsu makan', 10, 10000, 'https://drive.google.com/file/d/1PYzvDYygdcE8wICycWkw0lGQwWaXWQDI/view?usp=share_link', '2022-11-20 00:53:23', '2022-11-20 00:53:23');
 
 -- --------------------------------------------------------
 
