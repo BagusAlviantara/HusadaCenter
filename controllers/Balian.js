@@ -1,4 +1,5 @@
 const Balian = require("../models/BalianModel.js");
+const User = require("../models/UserModel.js");
 const { Op } = require("sequelize");
 
 exports.getBalian = async(req, res) => {
@@ -6,12 +7,18 @@ exports.getBalian = async(req, res) => {
         let response;
         if (req.role === "Admin") {
             response = await Balian.findAll({
-                attributes: ['id', 'user_id', 'name', 'phone', 'address', 'gender', 'age', 'description']
+                attributes: ['id', 'user_id', 'name', 'phone', 'address', 'gender', 'age', 'description'],
+                include: [
+                    { model: User }
+                ]
 
             });
         } else if (req.role = "Balian") {
             response = await Balian.findAll({
-                attributes: ['id', 'user_id', 'name', 'phone', 'address', 'gender', 'age', 'description']
+                attributes: ['id', 'user_id', 'name', 'phone', 'address', 'gender', 'age', 'description'],
+                include: [
+                    { model: User }
+                ]
             });
         }
         res.status(200).json(response);
@@ -33,15 +40,21 @@ exports.getBalianById = async(req, res) => {
             response = await Balian.findOne({
                 attributes: ['id', 'user_id', 'name', 'phone', 'address', 'gender', 'age', 'description'],
                 where: {
-                    id: balian.id
-                }
+                    id: balian.id,
+                },
+                include: [
+                    { model: User }
+                ]
             });
         } else {
             response = await Balian.findOne({
                 attributes: ['id', 'user_id', 'name', 'phone', 'address', 'gender', 'age', 'description'],
                 where: {
                     [Op.and]: [{ id: balian.id }]
-                }
+                },
+                include: [
+                    { model: User }
+                ]
             });
         }
         res.status(200).json(response);
@@ -90,6 +103,28 @@ exports.updateBalian = async(req, res) => {
             await Balian.update({ user_id, name, phone, address, gender, age, description }, {
                 where: {
                     id: balian.id
+                }
+            });
+        }
+        res.status(200).json({ msg: "Balian updated successfuly" });
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
+}
+
+exports.updateBalianbyUserId = async(req, res) => {
+    try {
+        const balian = await Balian.findOne({
+            where: {
+                id: req.params.id
+            }
+        });
+        if (!balian) return res.status(404).json({ msg: "Data tidak ditemukan" });
+        const { user_id, name, phone, address, gender, age, description } = req.body;
+        if (req.role === "Admin") {
+            await Balian.update({ user_id, name, phone, address, gender, age, description }, {
+                where: {
+                    id: balian.user_id
                 }
             });
         }

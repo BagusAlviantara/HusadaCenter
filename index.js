@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require("cors");
+const helmet = require("helmet");
+const compression = require("compression");
 const dotenv = require("dotenv").config();
 const session = require("express-session");
 const bodyParser = require('body-parser');
@@ -16,18 +18,23 @@ const AlternatifRoute = require("./routes/AlternatifBalianRoute.js");
 const Obat = require("./routes/ObatRoute.js");
 const Transaction = require("./routes/TransactionRoute.js");
 const Payment = require("./routes/PaymentRoute.js");
+const Midtrans = require("./routes/MidtransRoute.js");
 //const cookieSession = require('cookie-session')
+const { allowedDomains } = require("./config/server.js");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(helmet());
+app.use(compression());
 app.use(session({
     secret: 'somevalue',
     resave: true,
     saveUninitialized: false
 }));
 app.use(cors({
-    origin: 'http://localhost:5000'
+    origin: allowedDomains,
+    credentials: true
 }));
 const corsOptions = {
     optionsSuccessStatus: 200,
@@ -46,7 +53,11 @@ app.use(AlternatifRoute);
 app.use(Obat);
 app.use(Transaction);
 app.use(Payment);
+app.use(Midtrans);
 
+app.get('/api', (req, res) => {
+    return res.send("Hello World")
+});
 //google strategy
 passport.use(new GoogleStrategy({
         clientID: process.env.CLIENT_ID,

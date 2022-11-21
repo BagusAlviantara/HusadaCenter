@@ -98,6 +98,28 @@ exports.updateCustomer = async(req, res) => {
     }
 }
 
+exports.updateCustomerbyUserId = async(req, res) => {
+    try {
+        const customer = await Customer.findOne({
+            where: {
+                id: req.params.id
+            }
+        });
+        if (!customer) return res.status(404).json({ msg: "Data tidak ditemukan" });
+        const { user_id, name, phone, address, gender, age } = req.body;
+        if (req.role === "Admin") {
+            await Customer.update({ user_id, name, phone, address, gender, age }, {
+                where: {
+                    id: customer.user_id
+                }
+            });
+        }
+        res.status(200).json({ msg: "Customer updated successfuly" });
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
+}
+
 exports.deleteCustomer = async(req, res) => {
     try {
         const customer = await Customer.findOne({

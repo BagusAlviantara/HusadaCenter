@@ -6,12 +6,12 @@ exports.getObat = async(req, res) => {
         let response;
         if (req.role === "Admin") {
             response = await Obat.findAll({
-                attributes: ['id', 'name', 'description', 'stock', 'price']
+                attributes: ['id', 'latin_name', 'local_name', 'description', 'stock', 'price', 'URL']
 
             });
         } else if (req.role = "Customer") {
             response = await Obat.findAll({
-                attributes: ['id', 'name', 'description', 'stock', 'price']
+                attributes: ['id', 'latin_name', 'local_name', 'description', 'stock', 'price', 'URL']
             });
         }
         res.status(200).json(response);
@@ -31,14 +31,14 @@ exports.getObatById = async(req, res) => {
         let response;
         if (req.role === "Admin") {
             response = await Obat.findOne({
-                attributes: ['id', 'name', 'description', 'stock', 'price'],
+                attributes: ['id', 'latin_name', 'local_name', 'description', 'stock', 'price', 'URL'],
                 where: {
                     id: obat.id
                 }
             });
         } else {
             response = await Obat.findOne({
-                attributes: ['id', 'name', 'description', 'stock', 'price'],
+                attributes: ['id', 'latin_name', 'local_name', 'description', 'stock', 'price', 'URL'],
                 where: {
                     [Op.and]: [{ id: obat.id }]
                 }
@@ -51,14 +51,16 @@ exports.getObatById = async(req, res) => {
 }
 
 exports.createObat = async(req, res) => {
-    const { id, name, description, stock, price } = req.body;
+    const { id, latin_name, local_name, description, stock, price, URL } = req.body;
     try {
         await Obat.create({
             id: id,
-            name: name,
+            latin_name: latin_name,
+            local_name: local_name,
             description: description,
             stock: stock,
-            price: price
+            price: price,
+            URL: URL
         });
         res.status(201).json({ msg: "Obat Created Successfuly" });
     } catch (error) {
@@ -74,9 +76,9 @@ exports.updateObat = async(req, res) => {
             }
         });
         if (!obat) return res.status(404).json({ msg: "Data tidak ditemukan" });
-        const { id, name, description, stock, price } = req.body;
+        const { id, latin_name, local_name, description, stock, price, URL } = req.body;
         if (req.role === "Admin") {
-            await Obat.update({ id, name, description, stock, price }, {
+            await Obat.update({ id, latin_name, local_name, description, stock, price, URL }, {
                 where: {
                     id: obat.id
                 }
@@ -96,7 +98,7 @@ exports.deleteObat = async(req, res) => {
             }
         });
         if (!obat) return res.status(404).json({ msg: "Data tidak ditemukan" });
-        const { id, name, description, stock, price } = req.body;
+        const { id, latin_name, local_name, description, stock, price, URL } = req.body;
         if (req.role === "Admin") {
             await Obat.destroy({
                 where: {

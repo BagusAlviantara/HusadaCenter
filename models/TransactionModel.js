@@ -47,6 +47,10 @@ const Transaction = db.define('transaction', {
         validate: {
             notEmpty: true
         }
+    },
+    response_midtrans: {
+        type: Sequelize.TEXT,
+        allowNull: true
     }
 }, {
     freezeTableName: true,

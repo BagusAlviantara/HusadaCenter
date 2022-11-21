@@ -13,7 +13,14 @@ const Obat = db.define('obat', {
         },
         primaryKey: true
     },
-    name: {
+    latin_name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            notEmpty: true,
+        }
+    },
+    local_name: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
@@ -36,6 +43,13 @@ const Obat = db.define('obat', {
     },
     price: {
         type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
+    },
+    URL: {
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
             notEmpty: true
