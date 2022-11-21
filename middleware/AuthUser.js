@@ -59,6 +59,22 @@ exports.adminOnly = async(req, res, next) => {
     }
 }
 
+exports.balianAdmin = async(req, res, next) => {
+    try {
+        const user = await User.findOne({
+            where: {
+                id: req.session.userId
+            }
+        });
+        if (!user) return res.status(404).json({ msg: "User tidak ditemukan" });
+        if (user.role === "Balian" || user.role === "Admin") return res.status(403).json({ msg: "Akses terlarang" });
+
+        next();
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
+}
+
 exports.customerOnly = async(req, res, next) => {
     try {
         const user = await User.findOne({
@@ -67,7 +83,25 @@ exports.customerOnly = async(req, res, next) => {
             }
         });
         if (!user) return res.status(404).json({ msg: "User tidak ditemukan" });
-        if (user.role === "Customer" || user.role === "Employee") {
+        if (user.role === "Customer") {
+            next();
+        } else {
+            return res.status(403).json({ msg: "Akses terlarang" });
+        }
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
+}
+
+exports.customerAdmin = async(req, res, next) => {
+    try {
+        const user = await User.findOne({
+            where: {
+                id: req.session.userId
+            }
+        });
+        if (!user) return res.status(404).json({ msg: "User tidak ditemukan" });
+        if (user.role === "Customer" || user.role === "Admin") {
             next();
         } else {
             return res.status(403).json({ msg: "Akses terlarang" });

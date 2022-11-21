@@ -99,7 +99,7 @@ exports.updateBalian = async(req, res) => {
         });
         if (!balian) return res.status(404).json({ msg: "Data tidak ditemukan" });
         const { user_id, name, phone, address, gender, age, description } = req.body;
-        if (req.role === "Admin") {
+        if (req.role === "Admin" || req.role === "Balian") {
             await Balian.update({ user_id, name, phone, address, gender, age, description }, {
                 where: {
                     id: balian.id

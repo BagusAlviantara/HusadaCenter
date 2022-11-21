@@ -12,8 +12,8 @@ const router = express.Router();
 
 router.get('/transaction', verifyUser, getTransaction);
 router.get('/transaction/:id', verifyUser, getTransactionById);
-router.post('/transaction', verifyUser, adminOnly, createTransaction);
-router.patch('/transaction/:id', verifyUser, adminOnly, updateTransaction);
-router.delete('/transaction/:id', verifyUser, adminOnly, deleteTransaction);
+router.post('/transaction', verifyUser, createTransaction);
+router.patch('/transaction/:id', verifyUser, updateTransaction);
+router.delete('/transaction/:id', verifyUser, deleteTransaction);
 
 module.exports = router;

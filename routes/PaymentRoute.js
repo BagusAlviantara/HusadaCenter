@@ -12,8 +12,8 @@ const router = express.Router();
 
 router.get('/payment', verifyUser, getPayment);
 router.get('/payment/:id', verifyUser, getPaymentById);
-router.post('/payment', verifyUser, adminOnly, createPayment);
-router.patch('/payment/:id', verifyUser, adminOnly, updatePayment);
-router.delete('/payment/:id', verifyUser, adminOnly, deletePayment);
+router.post('/payment', verifyUser, createPayment);
+router.patch('/payment/:id', verifyUser, updatePayment);
+router.delete('/payment/:id', verifyUser, deletePayment);
 
 module.exports = router;
