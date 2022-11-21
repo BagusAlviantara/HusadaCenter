@@ -1,5 +1,5 @@
 const User = require("../models/UserModel.js");
-const argon2 = require("argon2");
+const bcrypt = require("bcrypt");
 
 exports.getUsers = async(req, res) => {
     try {
@@ -65,19 +65,22 @@ exports.createUser = async(req, res) => {
 
     const { email, password, confPassword, name, phone, role } = req.body;
     if (password !== confPassword) return res.status(400).json({ msg: "Password dan Confirm Password tidak cocok" });
-    const hashPassword = await argon2.hash(password);
-    try {
-        await User.create({
+    bcrypt.hash(password,10)
+    .then(hashPassword => {
+        const user = new User({
             email: email,
             password: hashPassword,
             name: name,
             phone: phone,
             role: role
-        });
-        res.status(201).json({ msg: "Register Berhasil" });
-    } catch (error) {
-        res.status(400).json({ msg: error.message });
-    }
+        })
+        user.save()
+        .then(user => {
+            res.json({message:"Saved Succcessfully"})
+        }).catch(err=>{
+            console.log(err);
+        })
+    })
 }
 
 exports.registerCustomer = async(req, res) => {
@@ -91,7 +94,7 @@ exports.registerCustomer = async(req, res) => {
     }
     const { email, password, confPassword, name, phone, role } = req.body;
     if (password !== confPassword) return res.status(400).json({ msg: "Password dan Confirm Password tidak cocok" });
-    const hashPassword = await argon2.hash(password);
+    const hashPassword = await bcrypt.hash(password,10);
     try {
         await User.create({
             email: email,
@@ -122,7 +125,7 @@ exports.updateUser = async(req, res) => {
     if (password === "" || password === null) {
         hashPassword = user.password
     } else {
-        hashPassword = await argon2.hash(password);
+        hashPassword = await bcrypt.hash(password,10);
     }
     if (password !== confPassword) return res.status(400).json({ msg: "Password dan Confirm Password tidak cocok" });
     try {

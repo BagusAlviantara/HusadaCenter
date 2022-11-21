@@ -1,5 +1,5 @@
 const User = require("../models/UserModel.js");
-const argon2 = require("argon2");
+const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 
@@ -10,10 +10,19 @@ exports.Login = async(req, res) => {
         }
     });
     if (!user) return res.status(404).json({ msg: "User tidak ditemukan" });
-    const match = await argon2.verify(user.password, req.body.password);
+    const match = await bcrypt.compare(req.body.password, user.password);
     if (!match) {
         return res.status(400).json({ msg: "Wrong Password" });
     }
+
+    // bcrypt.compare(user.password,user.password)
+    //     .then(match=>{
+    //         if (!match) {
+    //                return res.status(400).json({ msg: "Wrong Password" });
+    //             }
+    //     }).catch(err => {
+    //         console.log(err);
+    //     })
     req.session.userId = user.id;
     const id = user.id;
     const email = user.email;
@@ -46,7 +55,7 @@ exports.LoginUser = async(req, res) => {
         }
     });
     if (!user) return res.status(404).json({ msg: "User tidak ditemukan" });
-    const match = await argon2.verify(user.password, req.body.password);
+    const match = await bcrypt.compare(user.password, req.body.password);
     if (!match) {
         return res.status(400).json({ msg: "Wrong Password" });
     }
